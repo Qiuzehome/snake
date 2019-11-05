@@ -1,0 +1,30 @@
+#box {
+	position: absolute;
+	height: 500px;
+	width: 500px;
+	border: 1px solid #ccc;
+	background-color: darkgoldenrod
+}
+
+#snake {
+	background-color: green;
+	width: 25px;
+	height: 25px;
+	position: absolute;
+}
+#newbody{
+	background-color: green;
+	width: 25px;
+	height: 25px;
+	position: absolute;
+}
+
+
+
+#food {
+	background-color: red;
+	width: 25px;
+	height: 25px;
+	position: absolute;
+	
+}
