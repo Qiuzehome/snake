@@ -1,15 +1,28 @@
-var Newfood = null;
-var num=-1;
-function getfood(x,y) {
-	var Newfood = document.createElement("div");
-	box.appendChild(Newfood);
-//	var x = parseInt(Math.random() * 6) * 100;
-//	var y = parseInt(Math.random() * 6) * 100;
-	Newfood.id = "food";
-	food.style.left = x + "px";
-	food.style.top = y + "px";
-	food.style.backgroundColor = "red";
-	num++
-		document.getElementById("num").text=num;
-		
+var foodx;
+var foody;
+var food;
+var box=document.getElementById('box');
+onload = function() {
+	newfood();
+}
+function newfood(){
+	/*食物*/
+	foodx = parseInt(Math.random() * 20);
+	foody = parseInt(Math.random() * 20);
+	
+	food= document.createElement('div');
+	box.appendChild(food);
+	food.id='food';
+	food.style.left=foodx*25+'px';
+	food.style.top=foody*25+'px';
+	/*身体*/
+	for(var i = 0; i < snakeobj.length; i++) {
+	
+		snake= document.createElement('div');
+		box.appendChild(snake);
+		snake.id = 'snake';
+		snake.style.left=snakeobj[i].snakex*25 +'px';
+		snake.style.top=snakeobj[i].snakey*25 +'px';
+
+	}
 }

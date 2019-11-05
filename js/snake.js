@@ -1,115 +1,95 @@
-var snake = document.getElementById("snake");
-var time = null;
-var time1 = null;
-var movetype = null;
-var snakebody=[{x:0,y:0},{x:1,y:0}];
-
-
+//var snake = document.getElementById('snake');
+var newbody_location;
+var snake;
+var snakeobj = [{
+	snakex: 0,
+	snakey: 0
+}]
+var time;
 document.addEventListener('keypress', function(e) {
+
 	switch(e.key) {
-		case 'd':
-
-			clearInterval(time);
-			clearInterval(time1);
-
-			move1(8);
-
-			break;
-
 		case 'a':
-
 			clearInterval(time);
-			clearInterval(time1);
-			move1(-8);
-
+			movex(-1);
 			break;
-
-		case 's':
-
-			clearInterval(time1);
+		case 'd':
 			clearInterval(time);
-			move2(8);
-
+			movex(1);
 			break;
-
 		case 'w':
-
-			clearInterval(time1);
 			clearInterval(time);
-			move2(-8);
-
+			movey(-1);
+			break;
+		case 's':
+			clearInterval(time);
+			movey(1);
 			break;
 	}
+
 })
 
-function move1(speed1) {
-	clearInterval(time);
-	movetype = 1;
-	time = setInterval(function() {
+function movex(speed) {
 
-		snake.style.left = speed1 + snake.offsetLeft + "px";
-		var objx = snake.offsetLeft;
-		var objy = snake.offsetTop;
+	time = setInterval(
+		function() {
+			if(snakeobj[0].snakex >= 0 && snakeobj[0].snakex <= 20) {
+				snakeobj[0].snakex += speed;
+				
+				snake.style.left = snakeobj[0].snakex * 25 + 'px';
+				bodymove(snakeobj[0].snakex-speed,snakeobj[0].snakey);
+				console.log(snakeobj[0].snakex)
+				if(snakeobj[0].snakex < 0 || snakeobj[0].snakex >= 19) {
+					clearInterval(time);
+					alert('GameOver');
+					location.reload();
+				}
+			}
+			eat();
+		}, 300
 
-		newfood();
-		if(snake.offsetLeft >= 575 || snake.offsetLeft <= 0) {
-			clearInterval(time);
-		}
-	}, 10)
+	)
+
 }
 
-function move2(speed2) {
-	clearInterval(time1);
-	movetype = 2;
-	time1 = setInterval(function() {
+function movey(speed) {
 
-		snake.style.top = speed2 + snake.offsetTop + "px";
-		var objx = snake.offsetLeft;
-		var objy = snake.offsetTop;
+	time = setInterval(
+		function() {
+			if(snakeobj[0].snakey >= 0 && snakeobj[0].snakey <= 20) {
+				snakeobj[0].snakey += speed;
+				snake.style.top = snakeobj[0].snakey * 25 + 'px';
+				bodymove(snakeobj[0].snakex,snakeobj[0].snakey-speed);
+				if(snakeobj[0].snakey < 0 || snakeobj[0].snakey >= 19) {
+					clearInterval(time);
+					alert('GameOver');
+					location.reload();
+				}
+			}
+			eat();
+		}, 300
 
-		newfood();
-		if(snake.offsetTop >= 575 || snake.offsetTop <= 0) {
-			clearInterval(time1);
-		}
-	}, 10)
+	)
+
 }
 
-function snake_body(){
-//	var snake=document.getElementById('snake')
-//	console.log(snakebody.length);
-	for (var i=0;i<snakebody.length;i++) {
-		console.log(i)
-		var newbody=document.createElement('div');
-		box.appendChild(newbody);
-		newbody.id='snake';
-		snake.style.top=snakebody[i].y*25+'px';
-		snake.style.left=snakebody[i].x+25+'px';
+function eat() {
+	if(snakeobj[0].snakex == foodx && snakeobj[0].snakey == foody) {
+		box.removeChild(food);
+		newfood();
+
 	}
 }
-//function snake1() {
-//	this.body = [{
-//			x: 0,
-//			y: 0
-//		},
-//		{
-//			x: 1,
-//			y: 0
-//		},
-//		{
-//			x: 2,
-//			y: 0
-//		}
-//	];
 
-//	function snakebody1() {
-//		for(var i=0;i<this.body.length;i++){
-//		var snakebody = document.createElement("div");
-//		snakebody.id = "snake";
-//		snakebody.style.position = "absolute";
-//		}
-//		//		console.log(this.body[0].x);
-//		for(var i = 0; i < this.body.length; i++) {
-//
-//		}
-//	}
-//}
+function bodymove(x,y) {
+
+	for(var i = 0; i < snakeobj.length - 1; i++) {
+		newbody_location = {
+			snakex: x,
+			snakey: y
+		}
+		snakeobj.push(newbody_location);
+		snakeobj[i + 1] = snakeobj[i]
+		console.log('这是' + snakeobj);
+	}
+}
